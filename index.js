@@ -1,19 +1,37 @@
 const WebSocket = require('ws');
 
-const wss = new WebSocket.Server({ port: 8080 });
+const wss = new WebSocket.Server({
+  port: 8080
+});
 
 wss.on('connection', function connection(ws) {
-  ws.on('message', function incoming(message) {
-    console.log('received: %s', message);
+  var deviceId = null;
+  var deviceStatus = deviceStatus || null;
+  ws.on('message', function incoming(d) {
+    console.log('received: %s', d);
+    deviceId = d;
+    deviceStatus = (deviceStatus == "On") ? "Off" : "On";
   });
 
   var intervalID = setInterval(myCallback, 1000);
 
   function myCallback() {
-    ws.send(JSON.stringify({
-      "gender": (Math.floor(Math.random()*2) == 1) ? "Male" : "Female",
-      "age": Math.floor(Math.random()*100)
-    }));
-  }
+    getTemp(deviceId).then((t)=>{
+      ws.send(JSON.stringify({
+        "DeviceID": deviceId,
+        "State": deviceStatus,
+        "Temperature": t
+      }))
 
+    })
+  }
+  function getTemp(d) {
+    return new Promise((resolve, reject) => {
+      let t = null;
+      if (deviceStatus == "On")
+      t = Math.floor(Math.random()*100)/2 + 50;
+      else t = "N/A";
+      resolve(t);
+    })
+  }
 });

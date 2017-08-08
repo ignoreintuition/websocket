@@ -1,13 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-</head>
-<body>
 
-<script src="main.js"></script>
+  <title>Sample Websocket and D3</title>
+  <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Dashboard Example</a>
+      </div>
+    </div>
+  </nav>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-3 col-md-2">
+        <div class="panel panel-default">
+          <div id="entry" class="panel-body">
+          </div>
+        </div>
+        <button id="toggleState"> Switch On/Off </button>
+      </div>
+      <div class="col-sm-9 col-md-10">
+        <div id="graph"> </div>
+      </div>
+    </div>
+    <script id="deviceProperties" type="text/x-handlebars-template">
+      <div>
+        Device ID: {{deviceId}} <br>
+        Status: {{state}} </br>
+        Temperature: {{temp}}
+      </div>
+    </script>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../node_modules/d3/build/d3.min.js"></script>
+    <script src="../node_modules/handlebars/dist/handlebars.min.js"></script>
+    <script src="js/bar.js"></script>
+    <script src="js/main.js"></script>
 </body>
+
 </html>
